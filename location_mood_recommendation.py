@@ -38,6 +38,9 @@ food_count = {}
 # Processing
 def preprocess_text(emotion, food_recommend):
 
+    global food_count
+    food_count = {}
+
     # Looping through the food data
     for i in range(len(food_recommend)):
 
@@ -66,23 +69,25 @@ def preprocess_text(emotion, food_recommend):
 
     # Now specified mood is already associated with food.
     # Sorting and selecting the top foods (most to least appearing food)
-    top_foods = sorted(food_count, key=food_count.get, reverse=True)[:10]
+    top_foods = sorted(food_count, key=food_count.get, reverse=True)
     return top_foods
 
 
 def food_result(emotion):
     topn = []
     topn = preprocess_text(emotion, food_recommend) #function create dictionary only for particular mood
-    print(f"Popular Comfort Foods in {emotion} are:")
+    return topn[:5]
+
+    # Debug
+    # print(f"Popular Comfort Foods in {emotion} are:")
     # print(topn[0])
     # print(topn[1])
     # print(topn[2]) 
     # print(topn[3]) 
     # print(topn[4]) 
     # print(topn[5]) 
-    for food in topn:
-        print(food)
-
+    # for food in topn:
+    #     print(food)
 #food_result('bored')         10
 # food_result('blue')          0
 #food_result('yellow')        0

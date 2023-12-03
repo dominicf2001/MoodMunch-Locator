@@ -18,3 +18,6 @@ def handle_emotion(emotion):
         food_list += f"<li>{food}</li>\n"
     
     return food_list;
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5001)
