@@ -1,0 +1,33 @@
+.container {
+    margin: 20px;
+    outline: black 1px solid;
+}
+
+.title {
+    margin: 10px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.subtitle {
+    margin: 5px;
+    font-size: 1.25rem;    
+    text-align: center;
+}
+
+#emotionInputList {
+    display: flex;
+    justify-content: center;
+}
+
+.emotion-input-list-item {
+    margin: 20px;
+}
+
+#resultsList {
+    text-align: center;
+}
+
+.results-list-item {
+    margin: 20px;
+}
