@@ -3,7 +3,7 @@ body {
     background: -webkit-linear-gradient(to right, #ff9472, #f2709c);
     background: linear-gradient(to right, #ff9472, #f2709c);
     color: white;
-
+    /* background-image: url("food-background.jpeg"); */
     display: flex;
     flex-direction: column;
     align-items: center;
