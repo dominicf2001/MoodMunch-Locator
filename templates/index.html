@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
-	<title>Moodmunch</title>
-    <script src="https://unpkg.com/htmx.org@1.9.9"></script>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/reset.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/index.css') }}">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+  <title>Moodmunch</title>
+  <script src="https://unpkg.com/htmx.org@1.9.9"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/reset.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/index.css') }}">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Short+Stack&display=swap');
+  </style>
 </head>
+
 <body>
   <main>
-    <section class="container">
+    <div class="container">
       <h1 class="title">Welcome to MoodMunch!</h1>
-      <h2 class="subtitle" >How are you feeling today?</h2>
-      
+    </div>
+
+    <div class="content">
+      <h2 class="subtitle">How are you feeling today?</h2>
       <ul id="emotionInputList">
         {% for emotion in emotions %}
         <li class="emotion-input-list-item">
-          <button hx-get="emotions/{{ emotion }}" hx-target="#resultsList" hx-swap="innerHTML" class="emotion-input">{{ emotion }}</button>
+          <button hx-get="emotions/{{ emotion }}" hx-target="#resultsList" hx-swap="innerHTML" class="emotion-input">{{
+            emotion }}</button>
         </li>
         {% endfor %}
       </ul>
-    </section>
+    </div>
 
-    <section class="container">
+    <section class="container2">
       <h1 class="title">Results</h1>
       <ul id="resultsList"></ul>
     </section>
   </main>
 </body>
+
 </html>

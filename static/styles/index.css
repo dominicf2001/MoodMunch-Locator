@@ -1,23 +1,41 @@
-.container {
-    margin: 20px;
-    outline: black 1px solid;
+body {
+    background: #f2709c;
+    background: -webkit-linear-gradient(to right, #ff9472, #f2709c);
+    background: linear-gradient(to right, #ff9472, #f2709c);
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Short Stack', cursive;
 }
+
+.container {
+    text-align: center;
+    width: 80vh;
+    margin: 20px;
+    border: double white 5px;
+    border-radius: 50px;
+}
+
 
 .title {
     margin: 10px;
-    font-size: 2rem;
+    font-size: 4rem;
     text-align: center;
+
 }
 
 .subtitle {
-    margin: 5px;
-    font-size: 1.25rem;    
+    font-size: 3rem;
     text-align: center;
+    padding-top: 30px;
 }
 
 #emotionInputList {
     display: flex;
     justify-content: center;
+    padding-top: 20px;
 }
 
 .emotion-input-list-item {
@@ -26,8 +44,26 @@
 
 #resultsList {
     text-align: center;
+    font-size: 1.5rem;
+    background-image: url("assets/food-background.jpeg");
+    display: flex;
+    flex-direction: column;
+    height: 30vh;
+    justify-content: space-between;
+
 }
 
 .results-list-item {
     margin: 20px;
+}
+
+
+button {
+    background-image: linear-gradient(-180deg, #4231ff, #7503e6);
+    color: white;
+    border-radius: 15px;
+    height: 40px;
+    padding: 0 20px;
+    position: relative;
+    text-align: center;
 }
