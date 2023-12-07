@@ -22,9 +22,17 @@
 
     <div class="content">
       <h2 class="subtitle">How are you feeling today?</h2>
+      <div class="emojis">
+        <p class="worried">😟</p>
+        <p class="sad">😔</p>
+        <p class="happy">😊</p>
+        <p class="bored">😒</p>
+      </div>
       <ul id="emotionInputList">
+
         {% for emotion in emotions %}
         <li class="emotion-input-list-item">
+
           <button hx-get="emotions/{{ emotion }}" hx-target="#resultsList" hx-swap="innerHTML" class="emotion-input">{{
             emotion }}</button>
         </li>

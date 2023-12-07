@@ -34,12 +34,7 @@ body {
 
 #emotionInputList {
     display: flex;
-    justify-content: center;
-    padding-top: 20px;
-}
-
-.emotion-input-list-item {
-    margin: 20px;
+    justify-content: space-evenly;
 }
 
 #resultsList {
@@ -62,8 +57,14 @@ button {
     background-image: linear-gradient(-180deg, #4231ff, #7503e6);
     color: white;
     border-radius: 15px;
-    height: 40px;
-    padding: 0 20px;
-    position: relative;
-    text-align: center;
+    padding: 30px;
+    font-weight: bolder;
+}
+
+.emojis {
+    font-size: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 5%;
 }
