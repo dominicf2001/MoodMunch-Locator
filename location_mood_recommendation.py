@@ -1,14 +1,13 @@
 import pandas as pd
 import numpy as np
+import json
 
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
+from pandas.api.types import is_re
 
-
-food_recommend = pd.read_csv('dataset/food_coded.csv') 
-food_recommend.info()
-food_recommend.isnull().sum()
-
+# FOOD LOGIC
+# ----------
 food_recommend = pd.read_csv('dataset/food_coded.csv', sep=',', usecols=['comfort_food', 'comfort_food_reasons'])
 
 # only take two attributes comfort_food and comfort_food_reason and rename
@@ -16,7 +15,6 @@ food_recommend.rename(columns={'comfort_food': 'Food Types', 'comfort_food_reaso
 
 food_recommend["Emotions"] = food_recommend["Emotions"].fillna("")
 food_recommend["Food Types"] = food_recommend["Food Types"].fillna("")
-
 
 # Filter all common words
 stop = set(stopwords.words('english'))
@@ -49,6 +47,7 @@ def preprocess_text(emotion, food_recommend):
         # Convert all items in comfort_food_reasons to str included NaN value.
         # Split it into individual words, removes punctuation (. ,) and converts to lowercase
         # checks if each word is not a stop word. (and with NLTK, common words will be removed such as "I","and")
+        emotions = []
         if isinstance(emotions_item, str):
             emotions = emotions_item.lower().split()
             emotions = [lemmatizer.lemmatize(word.strip('.,')) for word in emotions if word not in stop]
@@ -77,23 +76,37 @@ def food_result(emotion):
     topn = []
     topn = preprocess_text(emotion, food_recommend) #function create dictionary only for particular mood
     return topn[:5]
+# ----------
 
-    # Debug
-    # print(f"Popular Comfort Foods in {emotion} are:")
-    # print(topn[0])
-    # print(topn[1])
-    # print(topn[2]) 
-    # print(topn[3]) 
-    # print(topn[4]) 
-    # print(topn[5]) 
-    # for food in topn:
-    #     print(food)
-#food_result('bored')         10
-# food_result('blue')          0
-#food_result('yellow')        0
-#food_result('satisfaction')  3
-#food_result('late')           3
-# food_result('sadness')
-# food_result('stressed')
-#food_result('happy')
-#food_result('happiness')
+
+# RESTAURANT LOGIC
+# ----------
+def get_restaurants(businesses):
+    i = 0
+    restaurants = []
+    for business in businesses:
+        if i == 100:
+            break
+        
+        categories = business['categories']
+
+        if categories is None:
+            continue
+        
+        is_restaurant = 'Restaurants' in categories or 'Food' in categories
+        if is_restaurant:
+            restaurants.append(business)
+        i += 1
+
+    print(restaurants)
+        
+    return
+
+businesses = []
+with open('dataset/yelp_businesses.json', 'r') as file:
+    for line in file:
+        businesses.append(json.loads(line))
+
+get_restaurants(businesses)
+
+# ----------
