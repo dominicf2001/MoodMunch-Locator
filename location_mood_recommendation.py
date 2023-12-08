@@ -97,10 +97,8 @@ def get_restaurants(businesses):
         if is_restaurant:
             restaurants.append(business)
         i += 1
-
-    print(restaurants)
         
-    return
+    return restaurants
 
 businesses = []
 with open('dataset/yelp_businesses.json', 'r') as file:
