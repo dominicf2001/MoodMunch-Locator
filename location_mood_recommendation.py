@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 import json
+import random
 
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
-from pandas.api.types import is_re
 
 # FOOD LOGIC
 # ----------
@@ -78,6 +78,14 @@ def food_result(emotion):
     return topn[:5]
 # ----------
 
+def kmeans(data, k):
+    centroids  = []
+    for _ in range(k):
+        i = random.randint(0, len(data) - 1)
+        centroids.append(data[i])
+
+    
+    return
 
 # RESTAURANT LOGIC
 # ----------
@@ -105,6 +113,8 @@ with open('dataset/yelp_businesses.json', 'r') as file:
     for line in file:
         businesses.append(json.loads(line))
 
-get_restaurants(businesses)
+restaurants = get_restaurants(businesses)
+kmeans(restaurants, 4)
 
 # ----------
+
