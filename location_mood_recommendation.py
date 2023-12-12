@@ -1,10 +1,12 @@
 import pandas as pd
 import numpy as np
+import pprint
 import json
+import random
+from haversine import haversine
 
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
-from pandas.api.types import is_re
 
 # FOOD LOGIC
 # ----------
@@ -78,6 +80,57 @@ def food_result(emotion):
     return topn[:5]
 # ----------
 
+# KMEANS LOGIC
+# ----------
+def recalculate_centroid(cluster):
+    sum_lat = sum(item['latitude'] for item in cluster)
+    sum_long = sum(item['longitude'] for item in cluster)
+    mean_lat = sum_lat / len(cluster)
+    mean_long = sum_long / len(cluster)
+    mean_point = [mean_lat, mean_long]
+
+    # select an item from the cluster nearest to the mean 
+    nearest_cluster_idx = 0
+    nearest_dist = haversine(mean_point, [cluster[0]['latitude'], cluster[0]['longitude']])
+    for i in range(len(cluster)):
+        cluster_point = [cluster[i]['latitude'], cluster[i]['longitude']]
+        current_dist = haversine(mean_point, cluster_point)
+        if current_dist < nearest_dist:
+            nearest_dist = current_dist
+            nearest_cluster_idx = i
+    
+    return cluster[nearest_cluster_idx]
+
+def kmeans(data, k, max_iterations=100):
+    # initialize centroids
+    centroids = [data[random.randint(0, len(data) - 1)] for _ in range(k)]
+    clusters = []
+    
+    for _ in range(max_iterations):
+        # create k clusters
+        clusters = [[] for _ in range(k)]
+        
+        for item in data:        
+            item_point = [item['latitude'], item['longitude']]
+
+            nearest_centroid_idx = 0
+            nearest_dist = haversine(item_point, [centroids[0]['latitude'], centroids[0]['longitude']])
+            for i in range(len(centroids)):
+                centroid_point = [centroids[i]['latitude'], centroids[i]['longitude']]
+                current_dist = haversine(item_point, centroid_point)
+
+                if current_dist < nearest_dist:
+                    nearest_dist = current_dist
+                    nearest_centroid_idx = i
+
+            clusters[nearest_centroid_idx].append(item)
+                
+        for i in range(len(centroids)):
+            if (len(clusters[i]) > 0):
+                centroids[i] = recalculate_centroid(clusters[i])
+                  
+    return centroids, clusters
+# ----------
 
 # RESTAURANT LOGIC
 # ----------
@@ -105,6 +158,10 @@ with open('dataset/yelp_businesses.json', 'r') as file:
     for line in file:
         businesses.append(json.loads(line))
 
-get_restaurants(businesses)
+restaurants = get_restaurants(businesses)
+centroids, clusters = kmeans(restaurants, 4)
+pprint.pprint(centroids[0])
+pprint.pprint(clusters[0])
 
 # ----------
+
