@@ -154,7 +154,7 @@ def get_restaurants(businesses):
     return restaurants
 
 businesses = []
-with open('dataset/yelp_businesses.json', 'r') as file:
+with open('dataset/yelp_academic_dataset_business.json', 'r',encoding='utf-8') as file:
     for line in file:
         businesses.append(json.loads(line))
 
