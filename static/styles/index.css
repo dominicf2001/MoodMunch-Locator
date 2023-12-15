@@ -10,6 +10,10 @@ body {
     font-family: 'Short Stack', cursive;
 }
 
+li {
+    margin: 20px;
+}
+
 .container {
     text-align: center;
     width: 80vh;
@@ -37,7 +41,7 @@ body {
     justify-content: space-evenly;
 }
 
-#resultsList {
+.results {
     text-align: center;
     font-size: 1.5rem;
     background-image: url("assets/food-background.jpeg");

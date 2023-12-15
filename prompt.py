@@ -53,6 +53,7 @@ def food_result(emotion):
     print(f"Popular Comfort Foods in {emotion} are:")
     for food in topn:
         print(food)
+    return topn[:5]
 
 food_result('bored')
 
@@ -161,17 +162,17 @@ emotions_and_foods = {
     "bored": ["sandwiches", "cookie", "vietnamese", "mac and cheese", "chicken wings"]
 }
 
-df_all_recommendations = pd.DataFrame()
-for emotion, comfort_foods in emotions_and_foods.items():
-    for food in comfort_foods:
-        filtered_restaurants = df_near_ucla[
+def get_restaurant_recommendations():
+    df_all_recommendations = pd.DataFrame()
+    for emotion, comfort_foods in emotions_and_foods.items():
+        for food in comfort_foods:
+            filtered_restaurants = df_near_ucla[
             (df_near_ucla['Food Category'].str.contains(food, case=False)) &
-            (df_near_ucla['Rating'] >= df_near_ucla['Rating'].mean())
-        ]
-        top_recommendations = filtered_restaurants.sort_values(by='Rating', ascending=False)
-        if not top_recommendations.empty:
-            top_recommendations['Comfort Food'] = food.title()
-            top_recommendations['Emotion'] = emotion
-            df_all_recommendations = pd.concat([df_all_recommendations, top_recommendations])
-
-print(df_all_recommendations[['Emotion', 'Comfort Food', 'Name', 'Rating', 'address', 'city', 'state', 'postal_code']])
+                (df_near_ucla['Rating'] >= df_near_ucla['Rating'].mean())
+            ]
+            top_recommendations = filtered_restaurants.sort_values(by='Rating', ascending=False)
+            if not top_recommendations.empty:
+                top_recommendations['Comfort Food'] = food.title()
+                top_recommendations['Emotion'] = emotion
+                df_all_recommendations = pd.concat([df_all_recommendations, top_recommendations])
+    return df_all_recommendations[['Emotion', 'Comfort Food', 'Name', 'Rating', 'address', 'city', 'state', 'postal_code']]
