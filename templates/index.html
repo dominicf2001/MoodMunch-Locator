@@ -33,16 +33,28 @@
         {% for emotion in emotions %}
         <li class="emotion-input-list-item">
 
-          <button hx-get="emotions/{{ emotion }}" hx-target="#resultsList" hx-swap="innerHTML" class="emotion-input">{{
-            emotion }}</button>
+          <button hx-get="emotions/{{ emotion }}"
+                  hx-target="#foodResultsList"
+                  hx-swap="innerHTML"
+                  hx-swap-oob="outerHTML"
+                  class="emotion-input">
+            {{ emotion }}
+          </button>
         </li>
         {% endfor %}
       </ul>
     </div>
 
-    <section class="container2">
-      <h1 class="title">Results</h1>
-      <ul id="resultsList"></ul>
+    <section id="content">
+      <div class="container">
+        <h1 class="title">Results</h1>
+        <ul class="results" id="foodResultsList"></ul>
+      </div>
+
+      <div class="container">
+        <h1 class="title">Restaurants</h1>
+        <ul class="results" id="restaurantResultsList"></ul>
+      </div>    
     </section>
   </main>
 </body>
