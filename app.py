@@ -12,7 +12,7 @@ def index():
 @app.route("/emotions/<emotion>")
 def handle_emotion(emotion):
     top_foods = food_result(emotion)
-    restaurants = get_restaurant_recommendations()
+    restaurants = get_restaurant_recommendations(emotion)
     
     food_list = ""
     for food in top_foods:

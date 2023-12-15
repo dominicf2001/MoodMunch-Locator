@@ -158,21 +158,21 @@ mean_rating = df_near_ucla['Rating'].mean()
 emotions_and_foods = {
     "stressed": ["burger", "cafes", "donuts", "ice cream", "chip", "pasta", "french fries"],
     "happy": ["pizza", "ice cream", "sub", "chicken wings", "pretzel", "hot dogs", "deli sandwich"],
-    "sadness": ["ice cream", "pizza", "deli", "mac and cheese", "pretzel", "chinese", "pasta", "burger"],
+    "sad": ["ice cream", "pizza", "deli", "mac and cheese", "pretzel", "chinese", "pasta", "burger"],
     "bored": ["sandwiches", "cookie", "vietnamese", "mac and cheese", "chicken wings"]
 }
 
-def get_restaurant_recommendations():
+def get_restaurant_recommendations(emotion):
     df_all_recommendations = pd.DataFrame()
-    for emotion, comfort_foods in emotions_and_foods.items():
-        for food in comfort_foods:
-            filtered_restaurants = df_near_ucla[
+    
+    for food in emotions_and_foods[emotion]:
+        filtered_restaurants = df_near_ucla[
             (df_near_ucla['Food Category'].str.contains(food, case=False)) &
-                (df_near_ucla['Rating'] >= df_near_ucla['Rating'].mean())
-            ]
-            top_recommendations = filtered_restaurants.sort_values(by='Rating', ascending=False)
-            if not top_recommendations.empty:
-                top_recommendations['Comfort Food'] = food.title()
-                top_recommendations['Emotion'] = emotion
-                df_all_recommendations = pd.concat([df_all_recommendations, top_recommendations])
+            (df_near_ucla['Rating'] >= df_near_ucla['Rating'].mean())
+        ]
+        top_recommendations = filtered_restaurants.sort_values(by='Rating', ascending=False)
+        if not top_recommendations.empty:
+            top_recommendations['Comfort Food'] = food.title()
+            top_recommendations['Emotion'] = emotion
+            df_all_recommendations = pd.concat([df_all_recommendations, top_recommendations])
     return df_all_recommendations[['Emotion', 'Comfort Food', 'Name', 'Rating', 'address', 'city', 'state', 'postal_code']]
